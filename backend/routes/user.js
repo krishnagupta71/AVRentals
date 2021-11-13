@@ -10,10 +10,10 @@ router.get('/', getusers) ;
 router.get('/:id', getUserByID);
 
 //Create New User
-router.post('/', createUser) ;
+router.post('/register', createUser) ;
 
 //Update User
-router.put('/:id', updateUser);
+router.put('/editprofile/:id', updateUser);
 
 //Delete user
 router.delete('/:id',deleteUser);

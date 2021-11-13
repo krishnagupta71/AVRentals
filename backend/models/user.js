@@ -33,7 +33,7 @@ UserModel.getUserByID = (id, result)=>{
             result(null, err)
         }
         else{
-            console.log('User fetched successfully')
+            console.log('User fetched successfully.')
             result(null, res);
         }
     })
@@ -85,11 +85,11 @@ UserModel.updateUser = (id, userReqData, result) => {
 UserModel.deleteUser = (id, result) => {
     dbConn.query('DELETE FROM users WHERE userID = ?', id, (err, res)=>{
         if(err){
-             console.log('Error while updating userData', err)
+             console.log('Error while deleting userData', err)
              result(null, err)
          }
          else{
-             console.log('User updated successfully')
+             console.log('User deleted successfully')
              result(null, res);
          }
      });

@@ -1,0 +1,97 @@
+import dbConn from'../config/db.config.js';
+
+var BillingModel = function(billing){
+    this.billingID = billing.billingID,
+    this.miles = billing.miles,
+    this.cost= billing.cost,
+    this.tax = billing.tax,
+    this.total_cost = billing.total_cost,
+    this.userID = billing.userID,
+    this.tripID = billing.tripID
+}
+
+//get all Billings 
+BillingModel.getAllBills = (result)=>{
+    dbConn.query('SELECT * FROM Billing',(err, res)=>{
+        if(err){
+            console.log('Error while fetching Billing', err)
+            result(null, err)
+        }
+        else{
+            console.log('Billing fetched successfully')
+            result(null, res);
+        }
+    })
+}
+
+//get BillingByID from DB
+BillingModel.getBillingByID = (id, result)=>{
+    dbConn.query(`SELECT * FROM Billing WHERE billingID=?`, id ,  (err, res)=>{
+        if(err){
+            console.log('Error while fetching Billing', err)
+            result(null, err)
+        }
+        else{
+            console.log('Billing fetched successfully.')
+            result(null, res);
+        }
+    })
+}
+
+
+/* POST JSON Details for Insomnia to create a new Billing
+{
+	"billingID": 333,
+	"miles":30,
+	"cost":50,
+	"tax":4,
+	"total_cost":54,
+	"userID":111,
+	"tripID":111
+}*/
+
+
+BillingModel.createBilling = (BillingReqData, result) => {
+    dbConn.query('INSERT INTO billing SET ?', BillingReqData ,  (err, res)=>{
+        if(err){
+            console.log('Error while inserting Billing Data', err)
+            result(null, err)
+        }
+        else{
+            console.log('Billing created successfully')
+            result(null, res);
+        }
+    })
+}
+
+//Update Billing
+BillingModel.updateBilling = (id, BillingReqData, result) => {
+   dbConn.query('UPDATE billing SET miles=?, cost = ?, tax = ?, total_cost = ?, userID = ?, tripID = ? WHERE billingID = ?',[BillingReqData.miles, BillingReqData.cost, BillingReqData.tax, BillingReqData.total_cost, BillingReqData.tripID, BillingReqData.userID, id], (err, res)=>{
+   //dbConn.query('UPDATE Billings SET password=? WHERE BillingID = ?',[BillingReqData.password, id], (err, res)=>{
+   if(err){
+            console.log('Error while updating BillingData', err)
+            result(null, err)
+        }
+        else{
+            console.log('Billing updated successfully')
+            result(null, res);
+        }
+    });
+}
+
+//Delete Billing
+BillingModel.deleteBilling = (id, result) => {
+    dbConn.query('DELETE FROM billing WHERE billingID = ?', id, (err, res)=>{
+        if(err){
+             console.log('Error while deleting Billing Data', err)
+             result(null, err)
+         }
+         else{
+             console.log('Billing deleted successfully')
+             result(null, res);
+         }
+     });
+ }
+
+//module.exports = Billing ;
+export default BillingModel ;
