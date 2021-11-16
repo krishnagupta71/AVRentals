@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose' ;
 import cors from 'cors' ;
 
-//import Routes
+//import userRoutes
 import userRoutes from './routes/user.js' ;
 import tripRoutes from './routes/trip.js' ;
 import carRoutes from './routes/car.js' ;

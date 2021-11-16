@@ -4,16 +4,16 @@ import { getbilling, getBillingByID, createBilling, updateBilling, deleteBilling
 const router = express.Router() ;
 
 //get all billing
-router.get('/allbills', getbilling) ;
+router.get('/all', getbilling) ;
 
 //get BillingByID
 router.get('/:id', getBillingByID);
 
 //Create New Bill
-router.post('/addbill', createBilling) ;
+router.post('/add', createBilling) ;
 
 //Update Bill
-router.put('/editbill/:id', updateBilling);
+router.put('/edit/:id', updateBilling);
 
 //Delete Bill
 router.delete('/:id',deleteBilling);

@@ -62,7 +62,7 @@ CarModel.createCar = (carReqData, result) => {
 
 //Update car
 CarModel.updateCar = (id, carReqData, result) => {
-   dbConn.query('UPDATE car SET manufacture=?, model = ?, registration_number = ?, userID = ? WHERE carID = ?',[carReqData.manufacture, carReqData.model, carReqData.registration_number, carReqData.carID, id], (err, res)=>{
+   dbConn.query('UPDATE car SET manufacture=?, model = ?, registration_number = ?, userID = ? WHERE carID = ?',[carReqData.manufacture, carReqData.model, carReqData.registration_number, carReqData.userID, id], (err, res)=>{
    if(err){
             console.log('Error while updating car data', err)
             result(null, err)

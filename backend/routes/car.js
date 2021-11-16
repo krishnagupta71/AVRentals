@@ -4,16 +4,16 @@ import { getcars, getCarByID, createCar, updateCar, deleteCar } from '../control
 const router = express.Router() ;
 
 //get all cars
-router.get('/allcars', getcars) ;
+router.get('/all', getcars) ;
 
 //get carByID
 router.get('/:id', getCarByID);
 
 //Create New Car
-router.post('/addcar', createCar) ;
+router.post('/add', createCar) ;
 
 //Update Car
-router.put('/editcar/:id', updateCar);
+router.put('/edit/:id', updateCar);
 
 //Delete Car
 router.delete('/:id', deleteCar);

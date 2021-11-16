@@ -19,6 +19,22 @@ export const getUserByID = (req, res) =>{
     })
  }
 
+ export const userlogin = (req, res) =>{
+    const userReqData = new UserModel(req.body)     
+    //check null
+    if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+        res.send(400).send({success:false, message: 'Please fill all the fields' })
+    }
+    else{  
+        UserModel.userlogin(userReqData, (err, user) => {
+           if(err)
+           res.send(err)
+           console.log(user)
+           res.json({status:true, message:'User data fetched for the username and password provided', data:user})
+        })
+    }
+}
+
 export const createUser = (req, res) =>{
      const userReqData = new UserModel(req.body)     
      //check null

@@ -4,16 +4,16 @@ import { gettrips, getTripByID, createTrip, updateTrip, deleteTrip } from '../co
 const router = express.Router() ;
 
 //get all trips
-router.get('/alltrips', gettrips) ;
+router.get('/all', gettrips) ;
 
 //get TripByID
 router.get('/:id', getTripByID);
 
 //Create New Trip
-router.post('/addtrip', createTrip) ;
+router.post('/add', createTrip) ;
 
 //Update Trip
-router.put('/edittrip/:id', updateTrip);
+router.put('/edit/:id', updateTrip);
 
 //Delete Trip
 router.delete('/:id',deleteTrip);
