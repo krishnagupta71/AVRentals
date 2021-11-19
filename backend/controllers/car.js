@@ -15,7 +15,11 @@ export const getCarByID = (req, res) =>{
      if(err)
          res.send(err);
      console.log('Car', Car);
-     res.send(Car)
+     if(Car.length == 0){
+        res.send({status:false, message:'Car Not Found'})
+     }
+     else
+        res.send(Car)
     })
  }
 
@@ -43,18 +47,24 @@ export const updateCar = (req, res) =>{
     }
     else{  
         CarModel.updateCar(req.params.id, CarReqData, (err, Car) => {
-           if(err)
-           res.send(err)
-           console.log(Car)
-           res.json({status:true, message:'Car Updated Successfully'})
-        })
+            if(err)
+                res.send({status:false, message:'Car Not Updated. Invalid Values Given.'})
+             else if(Car.affectedRows == 0) 
+                res.send({status:false, message:'Car Not Found'})
+            else    
+                 res.json({status:true, message:'Car Updated Successfully'})
+            }
+        )
     }
 } 
 
 export const deleteCar = (req, res) =>{
     CarModel.deleteCar(req.params.id, (err, Car)=>{
-    if(err)
+        if(err)
         res.send(err);
-    res.json({status:true, message:'Car Deleted Successfully'})
+    else if(Car.affectedRows == 0) 
+        res.send({status:false, message:'Car Not Found'})
+    else
+        res.json({status:true, message:'Car Deleted Successfully'})
     })
  }

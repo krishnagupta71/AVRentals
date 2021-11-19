@@ -17,10 +17,9 @@ TripModel.getAllTrips = (result)=>{
     dbConn.query('SELECT * FROM trip',(err, res)=>{
         if(err){
             console.log('Error while fetching trips', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Trips fetched successfully')
             result(null, res);
         }
     })
@@ -31,10 +30,9 @@ TripModel.getTripByID = (id, result)=>{
     dbConn.query(`SELECT * FROM trip WHERE tripID=?`, id ,  (err, res)=>{
         if(err){
             console.log('Error while fetching trips', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Trip fetched successfully')
             result(null, res);
         }
     })
@@ -58,10 +56,9 @@ TripModel.createTrip = (tripReqData, result) => {
     dbConn.query('INSERT INTO trip SET ?', tripReqData ,  (err, res)=>{
         if(err){
             console.log('Error while inserting trip data', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Trip created successfully')
             result(null, res);
         }
     })
@@ -72,10 +69,9 @@ TripModel.updateTrip = (id, tripReqData, result) => {
    dbConn.query('UPDATE trip SET dropoff_location=?, start_time = ?, end_time = ?, current_location = ?, pickup_location = ?, billingID = ?, userID = ? WHERE tripID = ?',[tripReqData.dropoff_location, tripReqData.start_time, tripReqData.end_time, tripReqData.current_location, tripReqData.pickup_location, tripReqData.billingID, tripReqData.userID, id], (err, res)=>{
    if(err){
             console.log('Error while updating trip data', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Trip updated successfully')
             result(null, res);
         }
     });
@@ -86,10 +82,9 @@ TripModel.deleteTrip = (id, result) => {
     dbConn.query('DELETE FROM trip WHERE tripID = ?', id, (err, res)=>{
         if(err){
              console.log('Error while deleting trip data', err)
-             result(null, err)
+             result(err, null)
          }
          else{
-             console.log('Trip deleted successfully')
              result(null, res);
          }
      });

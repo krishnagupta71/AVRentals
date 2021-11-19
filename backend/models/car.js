@@ -13,10 +13,9 @@ CarModel.getAllCars = (result)=>{
     dbConn.query('SELECT * FROM car',(err, res)=>{
         if(err){
             console.log('Error while fetching cars', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Cars fetched successfully')
             result(null, res);
         }
     })
@@ -27,10 +26,9 @@ CarModel.getCarByID = (id, result)=>{
     dbConn.query(`SELECT * FROM car WHERE carID=?`, id ,  (err, res)=>{
         if(err){
             console.log('Error while fetching cars', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Car fetched successfully');
             result(null, res);
         }
     })
@@ -51,10 +49,9 @@ CarModel.createCar = (carReqData, result) => {
     dbConn.query('INSERT INTO car SET ?', carReqData ,  (err, res)=>{
         if(err){
             console.log('Error while inserting carData', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Car created successfully')
             result(null, res);
         }
     })
@@ -65,10 +62,9 @@ CarModel.updateCar = (id, carReqData, result) => {
    dbConn.query('UPDATE car SET manufacture=?, model = ?, registration_number = ?, userID = ? WHERE carID = ?',[carReqData.manufacture, carReqData.model, carReqData.registration_number, carReqData.userID, id], (err, res)=>{
    if(err){
             console.log('Error while updating car data', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Car updated successfully')
             result(null, res);
         }
     });
@@ -79,10 +75,9 @@ CarModel.deleteCar = (id, result) => {
     dbConn.query('DELETE FROM car WHERE carID = ?', id, (err, res)=>{
         if(err){
              console.log('Error while deleting car data', err)
-             result(null, err)
+             result(err, null)
          }
          else{
-             console.log('Car deleted successfully')
              result(null, res);
          }
      });

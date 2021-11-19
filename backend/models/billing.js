@@ -15,7 +15,7 @@ BillingModel.getAllBills = (result)=>{
     dbConn.query('SELECT * FROM Billing',(err, res)=>{
         if(err){
             console.log('Error while fetching Billing', err)
-            result(null, err)
+            result(err, null)
         }
         else{
             console.log('Billing fetched successfully')
@@ -29,7 +29,7 @@ BillingModel.getBillingByID = (id, result)=>{
     dbConn.query(`SELECT * FROM Billing WHERE billingID=?`, id ,  (err, res)=>{
         if(err){
             console.log('Error while fetching Billing', err)
-            result(null, err)
+            result(err, null)
         }
         else{
             console.log('Billing fetched successfully.')
@@ -55,10 +55,9 @@ BillingModel.createBilling = (BillingReqData, result) => {
     dbConn.query('INSERT INTO billing SET ?', BillingReqData ,  (err, res)=>{
         if(err){
             console.log('Error while inserting Billing Data', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Billing created successfully')
             result(null, res);
         }
     })
@@ -70,10 +69,9 @@ BillingModel.updateBilling = (id, BillingReqData, result) => {
    //dbConn.query('UPDATE Billings SET password=? WHERE BillingID = ?',[BillingReqData.password, id], (err, res)=>{
    if(err){
             console.log('Error while updating BillingData', err)
-            result(null, err)
+            result(err, null)
         }
         else{
-            console.log('Billing updated successfully')
             result(null, res);
         }
     });
@@ -84,10 +82,9 @@ BillingModel.deleteBilling = (id, result) => {
     dbConn.query('DELETE FROM billing WHERE billingID = ?', id, (err, res)=>{
         if(err){
              console.log('Error while deleting Billing Data', err)
-             result(null, err)
+             result(err, null)
          }
          else{
-             console.log('Billing deleted successfully')
              result(null, res);
          }
      });

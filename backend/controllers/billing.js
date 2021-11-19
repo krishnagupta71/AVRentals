@@ -15,7 +15,11 @@ export const getBillingByID = (req, res) =>{
      if(err)
          res.send(err);
      console.log('Billing', billing);
-     res.send(billing)
+     if(billing.length == 0){
+        res.send({status:false, message:'Bill Not Found'})
+     }
+     else
+        res.send(billing)
     })
  }
 
@@ -43,10 +47,12 @@ export const updateBilling = (req, res) =>{
     }
     else{  
         BillingModel.updateBilling(req.params.id, billingReqData, (err, billing) => {
-           if(err)
-           res.send(err)
-           console.log(billing)
-           res.json({status:true, message:'Billing Updated Successfully'})
+            if(err)
+                res.send({status:false, message:'Bill Not Updated. Invalid Values Given.'})
+            else if(billing.affectedRows == 0) 
+                res.send({status:false, message:'Bill Not Found'})
+            else    
+                 res.json({status:true, message:'Bill Updated Successfully'})
         })
     }
 } 
@@ -55,6 +61,9 @@ export const deleteBilling = (req, res) =>{
     BillingModel.deleteBilling(req.params.id, (err, bill)=>{
     if(err)
         res.send(err);
-    res.json({status:true, message:'Billing Deleted Successfully'})
+    else if(bill.affectedRows == 0) 
+        res.send({status:false, message:'Bill Not Found'})
+    else
+        res.json({status:true, message:'Bill Deleted Successfully'})
     })
  }

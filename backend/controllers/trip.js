@@ -15,7 +15,11 @@ export const getTripByID = (req, res) =>{
      if(err)
          res.send(err);
      console.log('Trip', trip);
-     res.send(trip)
+     if(trip.length == 0){
+        res.send({status:false, message:'Trip Not Found'})
+     }
+     else
+        res.send(trip)
     })
  }
 
@@ -43,18 +47,23 @@ export const updateTrip = (req, res) =>{
     }
     else{  
         TripModel.updateTrip(req.params.id, tripReqData, (err, trip) => {
-           if(err)
-           res.send(err)
-           console.log(trip)
-           res.json({status:true, message:'Trip Updated Successfully'})
+        if(err)
+            res.send({status:false, message:'Trip Not Updated. Invalid Values Given.'})
+        else if(trip.affectedRows == 0) 
+            res.send({status:false, message:'Trip Not Found'})
+        else    
+             res.json({status:true, message:'Trip Updated Successfully'})
         })
     }
 } 
 
 export const deleteTrip = (req, res) =>{
     TripModel.deleteTrip(req.params.id, (err, trip)=>{
-    if(err)
+        if(err)
         res.send(err);
-    res.json({status:true, message:'Trip Deleted Successfully'})
+    else if(trip.affectedRows == 0) 
+        res.send({status:false, message:'Trip Not Found'})
+    else
+        res.json({status:true, message:'Trip Deleted Successfully'})
     })
  }

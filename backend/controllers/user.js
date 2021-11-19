@@ -15,7 +15,11 @@ export const getUserByID = (req, res) =>{
      if(err)
          res.send(err);
      console.log('User', user);
-     res.send(user)
+     if(user.length == 0){
+        res.send({status:false, message:'User Not Found'})
+     }
+     else
+        res.send(user)
     })
  }
 
@@ -27,10 +31,13 @@ export const getUserByID = (req, res) =>{
     }
     else{  
         UserModel.userlogin(userReqData, (err, user) => {
-           if(err)
-           res.send(err)
-           console.log(user)
-           res.json({status:true, message:'User data fetched for the username and password provided', data:user})
+            if(err)
+                res.send(err)
+            if(user == "Incorrect Username/Password." || user.length == 0){
+                res.json({status:true, message:'Incorrect Username/Password. Login Failed'})
+        }
+            else
+                res.json({status:true, message:'User data fetched for the username and password provided', data:user})
         })
     }
 }
@@ -59,10 +66,12 @@ export const updateUser = (req, res) =>{
     }
     else{  
         UserModel.updateUser(req.params.id, userReqData, (err, user) => {
-           if(err)
-           res.send(err)
-           console.log(user)
-           res.json({status:true, message:'User Updated Successfully'})
+        if(err)
+            res.send({status:false, message:'User Not Updated. Invalid Values Given.'})
+        else if(user.affectedRows == 0) 
+            res.send({status:false, message:'User Not Found'})
+        else    
+             res.json({status:true, message:'User Updated Successfully'})
         })
     }
 } 
@@ -71,6 +80,9 @@ export const deleteUser = (req, res) =>{
     UserModel.deleteUser(req.params.id, (err, user)=>{
     if(err)
         res.send(err);
-    res.json({status:true, message:'User Deleted Successfully'})
+    else if(user.affectedRows == 0) 
+        res.send({status:false, message:'User Not Found'})
+    else
+        res.json({status:true, message:'User Deleted Successfully'})
     })
  }
