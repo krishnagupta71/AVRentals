@@ -12,7 +12,7 @@ var BillingModel = function(billing){
 
 //get all Billings 
 BillingModel.getAllBills = (result)=>{
-    dbConn.query('SELECT * FROM Billing',(err, res)=>{
+    dbConn.query('SELECT * FROM billing',(err, res)=>{
         if(err){
             console.log('Error while fetching Billing', err)
             result(err, null)
@@ -26,7 +26,7 @@ BillingModel.getAllBills = (result)=>{
 
 //get BillingByID from DB
 BillingModel.getBillingByID = (id, result)=>{
-    dbConn.query(`SELECT * FROM Billing WHERE billingID=?`, id ,  (err, res)=>{
+    dbConn.query(`SELECT * FROM billing WHERE billingID=?`, id ,  (err, res)=>{
         if(err){
             console.log('Error while fetching Billing', err)
             result(err, null)
