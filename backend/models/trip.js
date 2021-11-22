@@ -80,7 +80,7 @@ TripModel.createTrip = (tripReqData, result) => {
 
 //Update Trip
 TripModel.updateTrip = (id, tripReqData, result) => {
-   dbConn.query('UPDATE trip SET dropoff_location=?, start_time = ?, end_time = ?, current_location = ?, pickup_location = ?, userID = ? carID = ? WHERE tripID = ?',[tripReqData.dropoff_location, tripReqData.start_time, tripReqData.end_time, tripReqData.current_location, tripReqData.pickup_location, tripReqData.userID, tripReqData.carID, id], (err, res)=>{
+   dbConn.query('UPDATE trip SET dropoff_location=?, start_time = ?, end_time = ?, current_location = ?, pickup_location = ?, userID = ?, carID = ? WHERE tripID = ?',[tripReqData.dropoff_location, tripReqData.start_time, tripReqData.end_time, tripReqData.current_location, tripReqData.pickup_location, tripReqData.userID, tripReqData.carID, id], (err, res)=>{
    if(err){
             console.log('Error while updating trip data', err)
             result(err, null)
