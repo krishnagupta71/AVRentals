@@ -1,4 +1,5 @@
 import CarModel from '../models/car.js'
+import axios from 'axios' ;
 
 // get all Cars list
 export const getcars = (req, res) =>{
@@ -32,9 +33,20 @@ export const createCar = (req, res) =>{
      else{  
          CarModel.createCar(CarReqData, (err, Car) => {
             if(err)
-            res.send(err)
-            console.log(Car)
-            res.json({status:true, message:'Car Created Successfully', data:Car})
+                res.send(err)
+            
+            //axios.post('http://1e72-73-15-187-30.ngrok.io/vehicle', {"vehicle_id":CarReqData.carID}).then((response) => {   
+            else if(Car !=null && Car.affectedRows != 0){
+                console.log("Car:",Car)
+                console.log("carIDSent: ",Car.insertId)
+                // axios.post('http://1e72-73-15-187-30.ngrok.io/vehicle', {"vehicle_id": Car.insertId}).then((response) => {   
+                //     console.log("CarID sent to Carla: ", response)
+                // }).catch(function (error) {
+                //     //console.log("Promise Rejected:", error);
+                // });
+                res.json({status:true, message:'Car Created Successfully', data:Car})
+            }
+            
          })
      }
  }

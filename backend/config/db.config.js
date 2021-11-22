@@ -2,9 +2,9 @@
 import mysql from 'mysql'
 //CReate mysql Connection
 const dbConn = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'root',
+    host:'av-rental-db.cu6psljv9z1n.us-east-2.rds.amazonaws.com',
+    user:'admin',
+    password:'avrental',
     database: 'avrentaldb'
 })
 

@@ -1,4 +1,5 @@
 import TripModel from '../models/trip.js'
+import axios from 'axios' ;
 
 // get all trips list
 export const gettrips = (req, res) =>{
@@ -32,8 +33,11 @@ export const createTrip = (req, res) =>{
      else{  
          TripModel.createTrip(tripReqData, (err, trip) => {
             if(err)
-            res.send(err)
+                res.send(err)
             console.log(trip)
+            axios.post('http://CarlaURL/addTrip', {"vehicle_id":tripReqData.carID, "trip_id": tripReqData.tripID, "pickup_location":tripReqData.pickup_location, "destination":tripReqData.dropoff_location}).then((response) => {
+                console.log("Trip details sent to Carla: ", response)
+            })
             res.json({status:true, message:'Trip Created Successfully', data:trip})
          })
      }
@@ -67,3 +71,16 @@ export const deleteTrip = (req, res) =>{
         res.json({status:true, message:'Trip Deleted Successfully'})
     })
  }
+
+export const updateFinishedTrip = (req, res) =>{
+    console.log("Trip finished");
+    const tripReqData = new TripModel(req.body)       
+        TripModel.updateFinishedTrip(tripReqData, (err, trip) => {
+        if(err)
+            res.send({status:false, message:'Trip Not Updated. Invalid Values Given.'})
+        else if(trip.affectedRows == 0) 
+            res.send({status:false, message:'Trip Not Found'})
+        else    
+             res.json({status:true, message:'Trip Updated Successfully'})
+        })
+} 

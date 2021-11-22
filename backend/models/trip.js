@@ -7,8 +7,9 @@ var TripModel = function(trip){
     this.end_time = trip.end_time,
     this.current_location = trip.current_location,
     this.pickup_location = trip.pickup_location,
-    this.billingID = trip.billingID,
-    this.userID = trip.userID
+    this.iscompleted = trip.iscompleted,
+    this.userID = trip.userID,
+    this.carID = trip.carID
 }
 
 //get all tripss
@@ -38,17 +39,30 @@ TripModel.getTripByID = (id, result)=>{
     })
 }
 
+TripModel.getIdlecar = (id, result)=>{
+    dbConn.query(`SELECT carID FROM trip WHERE iscompleted = 1` ,  (err, res)=>{
+        if(err){
+            console.log('Error while fetching trips', err)
+            result(err, null)
+        }
+        else{
+            result(null, res);
+        }
+    })
+}
+
 
 /* POST JSON Details for Insomnia to create a new trip
 {
-	"tripID": 111,
 	"dropoff_location":"Santa CLara",
 	"start_time":"2020-01-01 08:10:10",
 	"end_time":"2020-01-01 08:30:10",
 	"current_location":"San Jose",
 	"pickup_location":"San Jose",
 	"billingID":1234,
-	"userID":111
+	"userID": 1,
+    "iscompleted":1,
+    "carID": 1
 }*/
 
 
@@ -66,7 +80,7 @@ TripModel.createTrip = (tripReqData, result) => {
 
 //Update Trip
 TripModel.updateTrip = (id, tripReqData, result) => {
-   dbConn.query('UPDATE trip SET dropoff_location=?, start_time = ?, end_time = ?, current_location = ?, pickup_location = ?, billingID = ?, userID = ? WHERE tripID = ?',[tripReqData.dropoff_location, tripReqData.start_time, tripReqData.end_time, tripReqData.current_location, tripReqData.pickup_location, tripReqData.billingID, tripReqData.userID, id], (err, res)=>{
+   dbConn.query('UPDATE trip SET dropoff_location=?, start_time = ?, end_time = ?, current_location = ?, pickup_location = ?, userID = ? carID = ? WHERE tripID = ?',[tripReqData.dropoff_location, tripReqData.start_time, tripReqData.end_time, tripReqData.current_location, tripReqData.pickup_location, tripReqData.userID, tripReqData.carID, id], (err, res)=>{
    if(err){
             console.log('Error while updating trip data', err)
             result(err, null)
@@ -76,6 +90,20 @@ TripModel.updateTrip = (id, tripReqData, result) => {
         }
     });
 }
+
+
+//Update Trip Finished 
+TripModel.updateFinishedTrip = (tripReqData, result) => {
+    dbConn.query('UPDATE trip SET end_time = NOW(), iscompleted = 1 WHERE tripID = ?',[tripReqData.tripID], (err, res)=>{
+    if(err){
+             console.log('Error while updating trip data', err)
+             result(err, null)
+         }
+         else{
+             result(null, res);
+         }
+     });
+ }
 
 //Delete Trip
 TripModel.deleteTrip = (id, result) => {
