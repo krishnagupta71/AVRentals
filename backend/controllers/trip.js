@@ -97,5 +97,5 @@ export const updatePickup = (req, res) =>{
                 }).catch(function (error) {
                     console.log("Promise Rejected:", error);
                 });
-    res.json({status:true, message:' Updated Pickup Successfully'})
+    res.json({status:true, message:' Updated Pickup Successfully'}) 
 } 
