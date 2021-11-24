@@ -23,7 +23,7 @@ app.use('/car', carRoutes);
 app.use('/billing', billingRoutes);
 app.use('/idlecar', idlecarRoutes);
 
-const PORT = 3000 ;
+const PORT = process.env.PORT || 5000 ;
 app.listen(PORT,()=>{
     console.log(`Express Server is running at port: ${PORT}`)
 })

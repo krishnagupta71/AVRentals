@@ -69,7 +69,6 @@ UserModel.userlogin = async (userReqData, result)=>{
 
 /* POST JSON Details for Insomnia to create a new user
 {
-	"userID": 333,
 	"password":"pass3",
 	"user_email":"some3@some.com",
 	"firstname":"ccc",

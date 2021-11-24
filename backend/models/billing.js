@@ -41,13 +41,12 @@ BillingModel.getBillingByID = (id, result)=>{
 
 /* POST JSON Details for Insomnia to create a new Billing
 {
-	"billingID": 333,
 	"miles":30,
 	"cost":50,
 	"tax":4,
 	"total_cost":54,
-	"userID":111,
-	"tripID":111
+	"userID":1,
+	"tripID":1
 }*/
 
 

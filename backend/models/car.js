@@ -37,11 +37,10 @@ CarModel.getCarByID = (id, result)=>{
 
 /* POST JSON Details for Insomnia to create a new car
 {
-	"carID": 111,
 	"manufacture":"Honda",
 	"model":"2012",
-	"registration_number":123456
-    "userID":111
+	"registration_number":MNS123456
+    "userID":1
 }*/
 
 

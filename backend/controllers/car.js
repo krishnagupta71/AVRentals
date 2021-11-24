@@ -39,11 +39,11 @@ export const createCar = (req, res) =>{
             else if(Car !=null && Car.affectedRows != 0){
                 console.log("Car:",Car)
                 console.log("carIDSent: ",Car.insertId)
-                // axios.post('http://1e72-73-15-187-30.ngrok.io/vehicle', {"vehicle_id": Car.insertId}).then((response) => {   
-                //     console.log("CarID sent to Carla: ", response)
-                // }).catch(function (error) {
-                //     //console.log("Promise Rejected:", error);
-                // });
+                axios.post('http://ac0d-73-15-187-30.ngrok.io/vehicle', {"vehicle_id": Car.insertId}).then((response) => {   
+                    console.log("CarID sent to Carla: ", response)
+                }).catch(function (error) {
+                    //console.log("Promise Rejected:", error);
+                });
                 res.json({status:true, message:'Car Created Successfully', data:Car})
             }
             

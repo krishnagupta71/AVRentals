@@ -1,5 +1,5 @@
 import express from 'express'
-import { gettrips, getTripByID, createTrip, updateTrip, deleteTrip, updateFinishedTrip } from '../controllers/trip.js';
+import { gettrips, getTripByID, createTrip, updateTrip, deleteTrip, updateFinishedTrip, updatePickup } from '../controllers/trip.js';
 
 const router = express.Router() ;
 
@@ -18,7 +18,10 @@ router.put('/edit/:id', updateTrip);
 //Delete Trip
 router.delete('/:id',deleteTrip);
 
-////Create New Trip
+//Trip completed
 router.post('/finished', updateFinishedTrip) 
+
+//Pickup passenger
+router.post('/pickup', updatePickup) 
 
 export default router ;
