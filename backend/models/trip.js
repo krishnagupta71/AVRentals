@@ -39,8 +39,9 @@ TripModel.getTripByID = (id, result)=>{
     })
 }
 
-TripModel.getIdlecar = (id, result)=>{
-    dbConn.query(`SELECT carID FROM trip WHERE iscompleted = 1` ,  (err, res)=>{
+TripModel.getIdlecar = (id, result)=>{    
+   // dbConn.query(`SELECT carID FROM trip WHERE iscompleted = 1` ,  (err, res)=>{
+    dbConn.query(`SELECT carID FROM car WHERE carID NOT IN (SELECT carID FROM trip WHERE iscompleted = 1)` ,  (err, res)=>{
         if(err){
             console.log('Error while fetching trips', err)
             result(err, null)
@@ -90,7 +91,6 @@ TripModel.updateTrip = (id, tripReqData, result) => {
         }
     });
 }
-
 
 // //Update Pickup
 // TripModel.updatePickup = (id, tripReqData, result) => {

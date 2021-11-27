@@ -5,9 +5,9 @@ import axios from 'axios' ;
 export const gettrips = (req, res) =>{
    TripModel.getAllTrips((err, trips)=>{
     if(err)
-        res.send(err);
+        res.send({status:false, message:'Trips Not Found'})
     console.log('Trips', trips);
-    res.send(trips)
+    res.send({status: true, data:trips})
    })
 }
 
@@ -20,7 +20,7 @@ export const getTripByID = (req, res) =>{
         res.send({status:false, message:'Trip Not Found'})
      }
      else
-        res.send(trip)
+        res.send({status: true, data:trip})
     })
  }
 
@@ -28,12 +28,15 @@ export const createTrip = (req, res) =>{
      const tripReqData = new TripModel(req.body)     
      //check null
      if(req.body.constructor === Object && Object.keys(req.body).length === 0){
-         res.send(400).send({success:false, message: 'Please fill all the fields' })
+         res.send(400).send({status:false, message: 'Please fill all the fields' })
      }
      else{  
+        tripReqData.iscompleted = 0 ;
+        console.log("TripReqData_iscompleted: ",tripReqData.iscompleted )
+        console.log("TripReqData after:", tripReqData)
          TripModel.createTrip(tripReqData, (err, trip) => {
             if(err)
-                res.send(err)
+                res.send({status:false, message:"Trip Not Created."})
             else if(trip !=null && trip.affectedRows != 0){
                 console.log(trip)
                 console.log("trip ID:", trip.insertId, "car ID:", tripReqData.carID, "pickup:",tripReqData.pickup_location,"destination:", tripReqData.dropoff_location )
@@ -52,7 +55,7 @@ export const updateTrip = (req, res) =>{
     const tripReqData = new TripModel(req.body)     
     //check null
     if(req.body.constructor === Object && Object.keys(req.body).length === 0){
-        res.send(400).send({success:false, message: 'Please fill all the fields' })
+        res.send(400).send({status:false, message: 'Please fill all the fields' })
     }
     else{  
         TripModel.updateTrip(req.params.id, tripReqData, (err, trip) => {
@@ -86,16 +89,26 @@ export const updateFinishedTrip = (req, res) =>{
         else if(trip.affectedRows == 0) 
             res.send({status:false, message:'Trip Not Found'})
         else    
-             res.json({status:true, message:'Trip Updated Successfully'})
+             res.json({status:true, message:'Trip Status Updated to Completed.'})
         })
 } 
 
 export const updatePickup = (req, res) =>{
-    console.log("Pickup Update:", req.body.tripID);
-    axios.post('http://ac0d-73-15-187-30.ngrok.io/trip/pickup', {"trip_id": req.body.tripID}).then((response) => {   
+    TripModel.getTripByID(req.body.tripID, (err, trip)=>{
+        if(err)
+            res.send({statuse:false, message:err});
+        console.log('Trip', trip);
+        if(trip.length == 0){
+           res.send({status:false, message:'Pickup not updated. Trip Not Found'})
+        }
+        else{
+            console.log("Pickup Update:", req.body.tripID);
+            axios.post('http://ac0d-73-15-187-30.ngrok.io/trip/pickup', {"trip_id": req.body.tripID}).then((response) => {   
                     console.log("tripID sent to Carla: ", response)
                 }).catch(function (error) {
                     console.log("Promise Rejected:", error);
                 });
-    res.json({status:true, message:' Updated Pickup Successfully'}) 
+            res.json({status:true, message:'Updated Pickup Successfully'})
+        }
+    })
 } 

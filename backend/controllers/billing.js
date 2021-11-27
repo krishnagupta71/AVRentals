@@ -4,9 +4,9 @@ import BillingModel from '../models/billing.js'
 export const getbilling = (req, res) =>{
    BillingModel.getAllBills((err, billing)=>{
     if(err)
-        res.send(err);
+        res.send({status:false, message:err});
     console.log('Billings', billing);
-    res.send(billing)
+    res.send({status:true, data:billing})
    })
 }
 
@@ -19,7 +19,7 @@ export const getBillingByID = (req, res) =>{
         res.send({status:false, message:'Bill Not Found'})
      }
      else
-        res.send(billing)
+        res.send({status:true, data:billing})
     })
  }
 
