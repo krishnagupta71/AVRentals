@@ -145,7 +145,7 @@ export const updateAtPickUP = (req, res) => {
   });
 };
 
-export const updatePickup = (req, res) => {
+export const updatePickedup = (req, res) => {
   TripModel.getTripByID(req.body.tripID, (err, trip) => {
     if (err) res.send({ statuse: false, message: err });
     console.log("Trip", trip);
@@ -162,11 +162,13 @@ export const updatePickup = (req, res) => {
         })
         .then((response) => {
           console.log("tripID sent to Carla: ", response);
+          res.json({ status: true, message: "Updated Pickedup Successfully" });
         })
         .catch(function (error) {
           console.log("Promise Rejected:", error);
+          res.json({ status: true, message: error.toString() });
         });
-      res.json({ status: true, message: "Updated Pickup Successfully" });
+      
     }
   });
 };
