@@ -22,6 +22,7 @@ export const getTripByID = (req, res) => {
 };
 
 export const createTrip = (req, res) => {
+  let tripid;
   const tripReqData = new TripModel(req.body);
   //check null
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
@@ -35,7 +36,8 @@ export const createTrip = (req, res) => {
     TripModel.createTrip(tripReqData, (err, trip) => {
       if (err) res.send({ status: false, message: "Trip Not Created." });
       else if (trip != null && trip.affectedRows != 0) {
-        console.log(trip);
+        console.log(trip); 
+        tripid = trip.insertId,
         console.log(
           "trip ID:",
           trip.insertId,
@@ -63,6 +65,9 @@ export const createTrip = (req, res) => {
           })
           .catch(function (error) {
             console.log("Promise Rejected:", error);
+            TripModel.deleteTrip(tripid, (err, trip) => {
+              console.log("New Trip added was deleted since carla was failed.")
+            });
             res.json({
               status: false,
               message: error.toString(),
