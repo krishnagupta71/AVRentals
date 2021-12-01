@@ -102,8 +102,8 @@ CarModel.deleteCar = (id, result) => {
 CarModel.getCarByUser = (userid, result)=>{
     console.log("user ID isn model:",userid)
 
-    'SELECT sum(total_cost) FROM trip join billing on trip.tripID = billing.tripID  where trip.userID = 2'
-    dbConn.query(`SELECT * FROM car WHERE userID=?`, userid ,  (err, res)=>{
+    //'SELECT sum(total_cost) FROM trip join billing on trip.tripID = billing.tripID  where trip.userID = 2'
+    dbConn.query(`SELECT car.carID, car.model as model, car.registration_number as registration_number, car.manufacture as manufacture, count(trip.tripID) as Total_Trips, sum(total_cost) as Revenue FROM trip INNER JOIN billing ON trip.tripID = billing.tripID LEFT JOIN car ON car.carID = trip.carID WHERE car.userID = ? group by trip.carID`, userid ,  (err, res)=>{
         if(err){
             console.log('Error while fetching cars', err)
             result(err, null)

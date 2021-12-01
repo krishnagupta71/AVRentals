@@ -129,7 +129,7 @@ export const getIdleCar = (req, res) => {
 export const getCarByUser = (req, res) => {
   CarModel.getCarByUser(req.params.id, (err, Car) => {
     if (err) res.send(err);
-    console.log("Car", Car);
+    console.log("Car BY User", Car);
     if (Car.length == 0) {
       res.send({ status: false, message: "Car Not Found" });
     } else res.send({ status: true, data: Car });
