@@ -2,13 +2,14 @@ import UserModel from '../models/user.js'
 
 // get all users list
 export const getusers = (req, res) =>{
+    console.log("All Users") 
    UserModel.getAllUsers((err, users)=>{
     if(err)
         res.send({status: false, message:err});
     console.log('Users', users);
     res.send({status: true, data:users})
    })
-}
+} 
 
 export const getUserByID = (req, res) =>{
     UserModel.getUserByID(req.params.id, (err, user)=>{
