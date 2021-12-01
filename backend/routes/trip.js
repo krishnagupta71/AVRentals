@@ -28,6 +28,6 @@ router.post('/pickedup', updatePickedup)
 router.post('/atpickup', updateAtPickUP)
 
 //Get All trip details of a user
-router.put('/mytrips/:id', tripsMadeByUser);
+router.get('/mytrips/:id', tripsMadeByUser);
 
 export default router ;
