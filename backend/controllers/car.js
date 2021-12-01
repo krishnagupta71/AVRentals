@@ -23,6 +23,7 @@ export const getCarByID = (req, res) => {
 
 export const createCar = (req, res) => {
   const CarReqData = new CarModel(req.body);
+  let carid 
   //check null
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res
@@ -37,6 +38,7 @@ export const createCar = (req, res) => {
           //axios.post('http://1e72-73-15-187-30.ngrok.io/vehicle', {"vehicle_id":CarReqData.carID}).then((response) => {
           else if (Car != null && Car.affectedRows != 0) {
             console.log("Car:", Car);
+            carid = Car.insertId;
             console.log("carIDSent: ", Car.insertId);
             axios
               .post(`${CARLA_BASE_URL}/vehicle`, {
@@ -44,15 +46,22 @@ export const createCar = (req, res) => {
               })
               .then((response) => {
                 console.log("CarID sent to Carla: ", response);
+                res.json({
+                  status: true,
+                  message: "Car Added Successfully",
+                  data: Car,
+                });
               })
               .catch(function (error) {
                 console.log("Promise Rejected:", error);
+                CarModel.deleteCar(carid, (err, Car) => {
+                  console.log("Newly Added car deleted because of carla failure.")
+                })
+                res.json({
+                  status: false,
+                  message: error.toString()
+                });
               });
-            res.json({
-              status: true,
-              message: "Car Added Successfully",
-              data: Car,
-            });
           }
         });
       } else {
