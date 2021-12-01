@@ -45,7 +45,7 @@ export const createCar = (req, res) =>{
                         axios.post('http://ac0d-73-15-187-30.ngrok.io/vehicle', {"vehicle_id": Car.insertId}).then((response) => {   
                             console.log("CarID sent to Carla: ", response)
                         }).catch(function (error) {
-                            //console.log("Promise Rejected:", error);
+                            console.log("Promise Rejected:", error);
                         });
                         res.json({status:true, message:'Car Added Successfully', data:Car})
                     }
@@ -90,3 +90,40 @@ export const deleteCar = (req, res) =>{
         res.json({status:true, message:'Car Deleted Successfully'})
     })
  }
+
+ export const getIdleCar = (req, res) =>{
+        let carID = ""
+        console.log("current Location is:", req.body.current_location)
+        axios.get(`http://141d-73-15-187-30.ngrok.io/trip/nearby?location=${req.body.current_location}`).then((response) => {
+            console.log("Carla Response",response['data'][0]['vehicle_id']);
+            CarModel.getCarByID(response['data'][0]['vehicle_id'], (err, Car)=>{
+                if(err)
+                    res.send(err);
+                console.log('Car', Car);
+                if(Car.length == 0){
+                   res.send({status:false, message:'Car Not Found'})
+                }
+                else
+                   res.send({status:true, data:Car})
+               })
+        }).catch(function (error) {
+            console.log("Promise Rejected:", error);
+            res.send({status:false, message:'Car Not Found'})
+        });
+        
+
+
+    }
+
+    export const getCarByUser = (req, res) =>{
+        CarModel.getCarByID(req.params.id, (err, Car)=>{
+         if(err)
+             res.send(err);
+         console.log('Car', Car);
+         if(Car.length == 0){
+            res.send({status:false, message:'Car Not Found'})
+         }
+         else
+            res.send({status:true, data:Car})
+        })
+     }

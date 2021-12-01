@@ -5,16 +5,16 @@ var TripModel = function(trip){
     this.dropoff_location = trip.dropoff_location,
     this.start_time = trip.start_time,
     this.end_time = trip.end_time,
-    this.current_location = trip.current_location,
     this.pickup_location = trip.pickup_location,
     this.iscompleted = trip.iscompleted,
     this.userID = trip.userID,
-    this.carID = trip.carID
+    this.carID = trip.carID,
+    this.atPickUP = trip.atPickUP,
+    this.collision = trip.collision
 }
 
 //get all tripss
 TripModel.getAllTrips = (result)=>{
-    console.log("Teached getAllTrips in models.")
     dbConn.query('SELECT * FROM trip',(err, res)=>{
         if(err){
             console.log('Error while fetching trips', err)
@@ -81,7 +81,7 @@ TripModel.createTrip = (tripReqData, result) => {
 
 //Update Trip
 TripModel.updateTrip = (id, tripReqData, result) => {
-   dbConn.query('UPDATE trip SET dropoff_location=?, start_time = ?, end_time = ?, current_location = ?, pickup_location = ?, userID = ?, carID = ? WHERE tripID = ?',[tripReqData.dropoff_location, tripReqData.start_time, tripReqData.end_time, tripReqData.current_location, tripReqData.pickup_location, tripReqData.userID, tripReqData.carID, id], (err, res)=>{
+   dbConn.query('UPDATE trip SET dropoff_location=?, start_time = ?, end_time = ?, pickup_location = ?, userID = ?, carID = ? WHERE tripID = ?',[tripReqData.dropoff_location, tripReqData.start_time, tripReqData.end_time, tripReqData.pickup_location, tripReqData.userID, tripReqData.carID, id], (err, res)=>{
    if(err){
             console.log('Error while updating trip data', err)
             result(err, null)
@@ -108,6 +108,19 @@ TripModel.updateTrip = (id, tripReqData, result) => {
 //Update Trip Finished 
 TripModel.updateFinishedTrip = (tripReqData, result) => {
     dbConn.query('UPDATE trip SET end_time = NOW(), iscompleted = 1 WHERE tripID = ?',[tripReqData.tripID], (err, res)=>{
+    if(err){
+             console.log('Error while updating trip data', err)
+             result(err, null)
+         }
+         else{
+             result(null, res);
+         }
+     });
+ }
+
+//Update At PickUP
+TripModel.updateAtPickUP = (tripReqData, result) => {
+    dbConn.query('UPDATE trip SET atPickUP = 1 WHERE tripID = ?',[tripReqData.tripID], (err, res)=>{
     if(err){
              console.log('Error while updating trip data', err)
              result(err, null)

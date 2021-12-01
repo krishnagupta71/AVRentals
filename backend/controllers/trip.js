@@ -93,6 +93,19 @@ export const updateFinishedTrip = (req, res) =>{
         })
 } 
 
+export const updateAtPickUP = (req, res) =>{
+    console.log("Trip finished");
+    const tripReqData = new TripModel(req.body)       
+        TripModel.updateAtPickUP(tripReqData, (err, trip) => {
+        if(err)
+            res.send({status:false, message:'AtPickUp Not Updated. Invalid Values Given.'})
+        else if(trip.affectedRows == 0) 
+            res.send({status:false, message:'Trip Not Found'})
+        else    
+             res.json({status:true, message:'Car Reached at the pickup location.'})
+        })
+}
+
 export const updatePickup = (req, res) =>{
     TripModel.getTripByID(req.body.tripID, (err, trip)=>{
         if(err)
