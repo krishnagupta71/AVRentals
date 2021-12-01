@@ -55,15 +55,21 @@ export const createTrip = (req, res) => {
           })
           .then((response) => {
             console.log("Trip details sent to Carla: ", response);
+            res.json({
+              status: true,
+              message: "Trip Created Successfully",
+              data: trip,
+            });
           })
           .catch(function (error) {
             console.log("Promise Rejected:", error);
+            res.json({
+              status: false,
+              message: error.toString(),
+            });
           });
-        res.json({
-          status: true,
-          message: "Trip Created Successfully",
-          data: trip,
-        });
+          
+        
       }
     });
   }
