@@ -98,5 +98,20 @@ CarModel.deleteCar = (id, result) => {
      });
  }
 
+ //getCarByUser
+CarModel.getCarByUser = (userid, result)=>{
+    console.log("user ID isn model:",userid)
+    dbConn.query(`SELECT * FROM car WHERE userID=?`, userid ,  (err, res)=>{
+        if(err){
+            console.log('Error while fetching cars', err)
+            result(err, null)
+        }
+        else{
+            console.log("length is: ",res.data.length)
+            result(null, res);
+        }
+    })
+}
+
 //module.exports = car ;
 export default CarModel ;

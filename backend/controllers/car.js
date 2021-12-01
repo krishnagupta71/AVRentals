@@ -118,7 +118,7 @@ export const getIdleCar = (req, res) => {
 };
 
 export const getCarByUser = (req, res) => {
-  CarModel.getCarByID(req.params.id, (err, Car) => {
+  CarModel.getCarByUser(req.params.id, (err, Car) => {
     if (err) res.send(err);
     console.log("Car", Car);
     if (Car.length == 0) {
