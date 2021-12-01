@@ -144,4 +144,18 @@ TripModel.deleteTrip = (id, result) => {
      });
  }
 
+
+ //get tripByID from DB
+TripModel.getTripByUser = (id, result)=>{
+    dbConn.query(`SELECT * FROM trip join billing on trip.tripID = billing.tripID  where trip.userID = ?`, id ,  (err, res)=>{
+        if(err){
+            console.log('Error while fetching trips', err)
+            result(err, null)
+        }
+        else{
+            result(null, res);
+        }
+    })
+}
+
 export default TripModel ;

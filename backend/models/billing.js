@@ -89,5 +89,19 @@ BillingModel.deleteBilling = (id, result) => {
      });
  }
 
+
+//get BillingByID from DB
+BillingModel.getBillingByUser = (id, result)=>{
+    dbConn.query(`SELECT * FROM billing WHERE userID=?`, id ,  (err, res)=>{
+        if(err){
+            console.log('Error while fetching Billing', err)
+            result(err, null)
+        }
+        else{
+            console.log('Billing fetched successfully.')
+            result(null, res);
+        }
+    })
+}
 //module.exports = Billing ;
 export default BillingModel ;

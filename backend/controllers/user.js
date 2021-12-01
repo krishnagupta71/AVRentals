@@ -99,3 +99,16 @@ export const deleteUser = (req, res) =>{
         res.json({status:true, message:'User Deleted Successfully'})
     })
  }
+
+ export const tripsMadeByUser = (req, res) =>{
+    UserModel.getUserByID(req.params.id, (err, user)=>{
+     if(err)
+         res.send(err);
+     console.log('User', user);
+     if(user.length == 0){
+        res.send({status:false, message:'User Not Found'})
+     }
+     else
+        res.send({status:true, data:user})
+    })
+ }

@@ -21,4 +21,5 @@ router.put('/editprofile/:id', updateUser);
 //Delete user
 router.delete('/:id',deleteUser);
 
+
 export default router ;

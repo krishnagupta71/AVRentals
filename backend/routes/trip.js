@@ -1,5 +1,5 @@
 import express from 'express'
-import { gettrips, getTripByID, createTrip, updateTrip, deleteTrip, updateFinishedTrip, updatePickedup, updateAtPickUP} from '../controllers/trip.js';
+import { gettrips, getTripByID, createTrip, updateTrip, deleteTrip, updateFinishedTrip, updatePickedup, updateAtPickUP, tripsMadeByUser} from '../controllers/trip.js';
 
 const router = express.Router() ;
 
@@ -26,5 +26,8 @@ router.post('/pickedup', updatePickedup)
 
 //AT PickUP
 router.post('/atpickup', updateAtPickUP)
+
+//Get All trip details of a user
+router.put('/mytrips/:id', tripsMadeByUser);
 
 export default router ;

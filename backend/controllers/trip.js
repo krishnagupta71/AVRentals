@@ -172,3 +172,14 @@ export const updatePickedup = (req, res) => {
     }
   });
 };
+
+
+export const tripsMadeByUser = (req, res) => {
+  TripModel.getTripByUser(req.params.id, (err, trip) => {
+    if (err) res.send(err);
+    console.log("Trip", trip);
+    if (trip.length == 0) {
+      res.send({ status: false, message: "Trip Not Found" });
+    } else res.send({ status: true, data: trip });
+  });
+};
