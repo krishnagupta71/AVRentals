@@ -107,7 +107,7 @@ CarModel.getCarByUser = (userid, result)=>{
             result(err, null)
         }
         else{
-            console.log("length is: ",res.data.length)
+            // console.log("length is: ",res.data.length)
             result(null, res);
         }
     })

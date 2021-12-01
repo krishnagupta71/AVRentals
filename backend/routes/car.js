@@ -22,6 +22,6 @@ router.delete('/:id', deleteCar);
 router.post("/getcar", getIdleCar)
 
 //Gret cars owned by the owner
-router.post('/mycars', getCarByUser)
+router.get('/mycars/:id', getCarByUser)
 
 export default router ;
