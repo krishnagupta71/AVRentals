@@ -30,13 +30,30 @@ UserModel.getUserByID = (id, result)=>{
     dbConn.query(`SELECT * FROM users WHERE userID=?`, id ,  (err, res)=>{
         if(err){
             console.log('Error while fetching users', err)
-            result(null, err)
+            result(err, null)
         }
         else{
             result(null, res);
         }
     })
 }
+
+//get User EMail
+
+UserModel.useremail = async (userReqData, result)=>{
+    //userReqData.password = await bcrypt.hash(userReqData.password, 10);
+    // dbConn.query(`SELECT * FROM users WHERE user_email= and password= ?`,[userReqData.user_email, userReqData.password] ,  (err, res)=>{
+        dbConn.query(`SELECT * FROM users WHERE user_email= ?`,[userReqData.user_email] ,  async (err, res)=>{
+            if(err){
+                console.log('Error while fetching user', err)
+                result(err, null)
+            }
+            else{
+                result(null, res);
+            }
+        })
+}
+
 
 //get userByID from DB
 UserModel.userlogin = async (userReqData, result)=>{

@@ -56,6 +56,22 @@ CarModel.createCar = (carReqData, result) => {
     })
 }
 
+//get Car Registration Number
+
+CarModel.carRegistration = async (carReqData, result)=>{
+    //userReqData.password = await bcrypt.hash(userReqData.password, 10);
+    // dbConn.query(`SELECT * FROM users WHERE user_email= and password= ?`,[userReqData.user_email, userReqData.password] ,  (err, res)=>{
+        dbConn.query(`SELECT * FROM car WHERE registration_number= ?`,[carReqData.registration_number] ,  async (err, res)=>{
+            if(err){
+                console.log('Error while fetching user', err)
+                result(err, null)
+            }
+            else{
+                result(null, res);
+            }
+        })
+}
+
 //Update car
 CarModel.updateCar = (id, carReqData, result) => {
    dbConn.query('UPDATE car SET manufacture=?, model = ?, registration_number = ?, userID = ? WHERE carID = ?',[carReqData.manufacture, carReqData.model, carReqData.registration_number, carReqData.userID, id], (err, res)=>{

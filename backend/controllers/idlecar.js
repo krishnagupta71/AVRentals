@@ -20,7 +20,7 @@ export const getIdlecar = (req, res) =>{
                res.send({status:false, message:'Car Not Found'})
             }
             else
-               res.send(Car)
+               res.send({status: true, data:Car})
            })
         }
         

@@ -1,5 +1,5 @@
 import express from 'express'
-import { getcars, getCarByID, createCar, updateCar, deleteCar } from '../controllers/car.js';
+import { getcars, getCarByID, createCar, updateCar, deleteCar, getIdleCar, getCarByUser } from '../controllers/car.js';
 
 const router = express.Router() ;
 
@@ -17,5 +17,11 @@ router.put('/edit/:id', updateCar);
 
 //Delete Car
 router.delete('/:id', deleteCar);
+
+//Get Idle Car
+router.post("/getcar", getIdleCar)
+
+//Gret cars owned by the owner
+router.post('/mycars', getCarByUser)
 
 export default router ;
