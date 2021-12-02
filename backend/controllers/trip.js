@@ -54,6 +54,7 @@ export const createTrip = (req, res) => {
             trip_id: trip.insertId,
             pickup_location: tripReqData.pickup_location,
             destination: tripReqData.dropoff_location,
+            crash: tripReqData.collision
           })
           .then((response) => {
             console.log("Trip details sent to Carla: ", response);
