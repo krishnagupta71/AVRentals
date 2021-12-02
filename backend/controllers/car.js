@@ -97,12 +97,23 @@ export const updateCar = (req, res) => {
 };
 
 export const deleteCar = (req, res) => {
-  CarModel.deleteCar(req.params.id, (err, Car) => {
-    if (err) res.send(err);
-    else if (Car.affectedRows == 0)
-      res.send({ status: false, message: "Car Not Found" });
-    else res.json({ status: true, message: "Car Deleted Successfully" });
-  });
+  axios
+        .post(`${CARLA_BASE_URL}/vehicle/${req.params.id}`)
+        .then((response) => {
+          CarModel.deleteCar(req.params.id, (err, Car) => {
+            if (err) res.send(err);
+            else if (Car.affectedRows == 0)
+              res.send({ status: false, message: "Car Not Found" });
+            else res.json({ status: true, message: "Car Deleted Successfully" });
+          });
+        })
+        .catch(function (error) {
+          console.log("Promise Rejected:", error);
+          res.json({
+            status: false,
+            message: error.toString()
+          });
+        });
 };
 
 export const getIdleCar = (req, res) => {
