@@ -104,7 +104,7 @@ export const updateTrip = (req, res) => {
           billObj.userID = trip[0].userID;
           billObj.tripID = trip[0].tripID;
           const billingReqData = new BillingModel(billObj)  
-          BillingModel.createBilling(billingReqData, (err, billing) => {
+          BillingModel.createBilling(billingReqData, (err, billing) => { 
             if(err)
             res.send(err)
             console.log(billing)
