@@ -1,4 +1,6 @@
 import TripModel from "../models/trip.js";
+import BillingModel from '../models/billing.js'
+
 import axios from "axios";
 import { CARLA_BASE_URL } from "../config/carlaConfig.js";
 
@@ -82,24 +84,50 @@ export const createTrip = (req, res) => {
 };
 
 export const updateTrip = (req, res) => {
-  const tripReqData = new TripModel(req.body);
-  //check null
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
-    res
-      .send(400)
-      .send({ status: false, message: "Please fill all the fields" });
-  } else {
-    TripModel.updateTrip(req.params.id, tripReqData, (err, trip) => {
-      if (err)
-        res.send({
-          status: false,
-          message: "Trip Not Updated. Invalid Values Given.",
+  let tripReqData;
+
+  TripModel.getTripByID(req.params.id, (err, trip) => {
+    if (err) res.send(err);
+    console.log("Trip", trip);
+    if (trip.length == 0) {
+      res.send({ status: false, message: "Trip Not Found" });
+    } else{
+        let toUpdate = {...trip[0], ...req.body} 
+        if(req.body.iscompleted){
+          toUpdate.end_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+          console.log("end time is:", toUpdate.end_time)
+          let billObj = {};
+          billObj.miles=req.body.miles;
+          billObj.cost = billObj.miles*5;
+          billObj.tax = billObj.cost*.25;
+          billObj.total_cost = billObj.cost + billObj.tax ;
+          billObj.userID = trip[0].userID;
+          billObj.tripID = trip[0].tripID;
+          const billingReqData = new BillingModel(billObj)  
+          BillingModel.createBilling(billingReqData, (err, billing) => { 
+            if(err)
+            res.send(err)
+            console.log(billing)
+            console.log("Bill Created.")
+            // res.json({status:true, message:'Bill Created Successfully', data:billing})
+         })
+        }
+        tripReqData = new TripModel(toUpdate);
+        console.log("tripReqData is:",tripReqData )
+        TripModel.updateTrip(req.params.id, tripReqData, (err, trip) => {
+          if (err)
+            res.send({
+              status: false,
+              message: "Trip Not Updated. Invalid Values Given.",
+            });
+          else if (trip.affectedRows == 0)
+            res.send({ status: false, message: "Trip Not Found" });
+          else res.json({ status: true, message: "Trip Updated Successfully" });
         });
-      else if (trip.affectedRows == 0)
-        res.send({ status: false, message: "Trip Not Found" });
-      else res.json({ status: true, message: "Trip Updated Successfully" });
-    });
-  }
+    } 
+  })
+ 
+  
 };
 
 export const deleteTrip = (req, res) => {

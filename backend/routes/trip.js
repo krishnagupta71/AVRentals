@@ -19,13 +19,13 @@ router.put('/edit/:id', updateTrip);
 router.delete('/:id',deleteTrip);
 
 //Trip completed
-router.post('/finished', updateFinishedTrip) 
+// router.post('/finished', updateFinishedTrip) 
 
 //Pickup passenger
 router.post('/pickedup', updatePickedup) 
 
 //AT PickUP
-router.post('/atpickup', updateAtPickUP)
+// router.post('/atpickup', updateAtPickUP)
 
 //Get All trip details of a user
 router.get('/mytrips/:id', tripsMadeByUser);
