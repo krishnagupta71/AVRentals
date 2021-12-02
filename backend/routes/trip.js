@@ -1,5 +1,5 @@
 import express from 'express'
-import { gettrips, getTripByID, createTrip, updateTrip, deleteTrip, updateFinishedTrip, updatePickedup, updateAtPickUP, tripsMadeByUser} from '../controllers/trip.js';
+import { gettrips, getTripByID, createTrip, updateTrip, deleteTrip, updateFinishedTrip, updatePickedup, updateAtPickUP, tripsMadeByUser, tripStatus} from '../controllers/trip.js';
 
 const router = express.Router() ;
 
@@ -29,5 +29,8 @@ router.post('/atpickup', updateAtPickUP)
 
 //Get All trip details of a user
 router.get('/mytrips/:id', tripsMadeByUser);
+
+//Get trip status
+router.get('/status/:id', tripStatus);
 
 export default router ;

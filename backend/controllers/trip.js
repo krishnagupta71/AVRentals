@@ -183,3 +183,18 @@ export const tripsMadeByUser = (req, res) => {
     } else res.send({ status: true, data: trip });
   });
 };
+
+
+export const tripStatus = (req, res) => {
+  console.log("trip ID: ", req.params.id)
+  axios
+  .get(`${CARLA_BASE_URL}/trip/status/${req.params.id}`)
+  .then((response) => {
+    console.log("Trip status requested to Carla: ", response);
+    res.json({ status: true, message: response });
+  })
+  .catch(function (error) {
+    console.log("Promise Rejected:", error);
+    res.json({ status: false, message: error.toString() });
+  });
+};
