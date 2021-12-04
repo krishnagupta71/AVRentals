@@ -25,6 +25,7 @@ export const getTripByID = (req, res) => {
 
 export const createTrip = (req, res) => {
   let tripid;
+ // req.body.start_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
   const tripReqData = new TripModel(req.body);
   //check null
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
@@ -97,6 +98,7 @@ export const updateTrip = (req, res) => {
           toUpdate.end_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
           console.log("end time is:", toUpdate.end_time)
           let billObj = {};
+          console.log("miles is:", req.body.miles)
           billObj.miles=req.body.miles;
           billObj.cost = billObj.miles*5;
           billObj.tax = billObj.cost*.25;
@@ -191,13 +193,24 @@ export const updatePickedup = (req, res) => {
         })
         .then((response) => {
           console.log("tripID sent to Carla: ", response);
-          res.json({ status: true, message: "Updated Pickedup Successfully" });
+          //res.json({ status: true, message: "Updated Pickedup Successfully" });
+          trip[0].start_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+          console.log("start Time is:", trip[0].start_time);
+          TripModel.updateTrip(trip[0].tripID, trip[0], (err, trip) => {
+            if (err)
+              res.send({
+                status: false,
+                message: "Trip Not Updated. Invalid Values Given.",
+              });
+            else if (trip.affectedRows == 0)
+              res.send({ status: false, message: "Trip Not Found" });
+            else res.json({ status: true, message: "Trip Updated Successfully" });
+          });
         })
         .catch(function (error) {
           console.log("Promise Rejected:", error);
           res.json({ status: true, message: error.toString() });
         });
-      
     }
   });
 };
