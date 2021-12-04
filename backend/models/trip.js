@@ -162,7 +162,11 @@ TripModel.deleteTrip = (id, result) => {
 //get tripByID from DB
 TripModel.getTripByUser = (id, result) => {
   dbConn.query(
-    `SELECT * FROM trip left join billing on trip.tripID = billing.tripID  where trip.userID = ?`,
+    `SELECT * FROM 
+    billing right join trip 
+    inner join car on trip.carID = car.carID
+    on trip.tripID = billing.tripID  
+    where trip.userID = ?`,
     id,
     (err, res) => {
       if (err) {
