@@ -56,8 +56,7 @@ export const createTrip = (req, res) => {
             vehicle_id: tripReqData.carID,
             trip_id: trip.insertId,
             pickup_location: tripReqData.pickup_location,
-            destination: tripReqData.dropoff_location,
-            crash: tripReqData.collision
+            destination: tripReqData.dropoff_location
           })
           .then((response) => {
             console.log("Trip details sent to Carla: ", response);
@@ -190,6 +189,7 @@ export const updatePickedup = (req, res) => {
       axios
         .post(`${CARLA_BASE_URL}/trip/pickup`, {
           trip_id: req.body.tripID,
+          crash: tripReqData.collision
         })
         .then((response) => {
           console.log("tripID sent to Carla: ", response);
