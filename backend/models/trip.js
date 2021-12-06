@@ -166,7 +166,7 @@ TripModel.getTripByUser = (id, result) => {
     billing right join trip 
     inner join car on trip.carID = car.carID
     on trip.tripID = billing.tripID  
-    where trip.userID = ?`,
+    where trip.userID = ? order by trip.tripID desc`,
     id,
     (err, res) => {
       if (err) {
