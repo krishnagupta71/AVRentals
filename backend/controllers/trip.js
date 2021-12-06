@@ -189,7 +189,7 @@ export const updatePickedup = (req, res) => {
       axios
         .post(`${CARLA_BASE_URL}/trip/pickup`, {
           trip_id: req.body.tripID,
-          crash: tripReqData.collision
+          crash: req.body.collision
         })
         .then((response) => {
           console.log("tripID sent to Carla: ", response);
