@@ -10,6 +10,7 @@ var TripModel = function (trip) {
     (this.userID = trip.userID),
     (this.carID = trip.carID),
     (this.atPickUp = trip.atPickUp),
+    (this.isPickedUp = trip.isPickedUp),
     (this.collision = trip.collision),
     (this.eta = trip.eta);
 };
@@ -80,7 +81,7 @@ TripModel.createTrip = (tripReqData, result) => {
 //Update Trip
 TripModel.updateTrip = (id, tripReqData, result) => {
   dbConn.query(
-    "UPDATE trip SET dropoff_location=?, start_time = ?, end_time = ?, pickup_location = ?, userID = ?, iscompleted = ?, carID = ?, atPickUp = ?, collision = ?, eta = ? WHERE tripID = ?",
+    "UPDATE trip SET dropoff_location=?, start_time = ?, end_time = ?, pickup_location = ?, userID = ?, iscompleted = ?, carID = ?, atPickUp = ?, collision = ?, eta = ?, isPickedUp = ? WHERE tripID = ?",
     [
       tripReqData.dropoff_location,
       tripReqData.start_time,
@@ -92,6 +93,7 @@ TripModel.updateTrip = (id, tripReqData, result) => {
       tripReqData.atPickUp,
       tripReqData.collision,
       tripReqData.eta,
+      tripReqData.isPickedUp,
       id,
     ],
     (err, res) => {
