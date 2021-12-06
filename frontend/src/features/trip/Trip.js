@@ -10,11 +10,11 @@ import {
   Image,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getAvailableCar, getLocations } from "../home/HomeSlice";
+import { getLocations } from "../home/HomeSlice";
 import logoImage from "../../assets/logo.jpg";
 import tripCompleteImage from "../../assets/complete.png";
 import tripCollisionImage from "../../assets/crash.png";
-import { startRideAction, trackRideAction } from "../../app/actions";
+import { startRideAction } from "../../app/actions";
 
 export function Trip({ tripData }) {
   const dispatch = useDispatch();
@@ -33,9 +33,9 @@ export function Trip({ tripData }) {
   const startTrip = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(startRideAction({ tripID }));
+      dispatch(startRideAction({ tripID, crash }));
     },
-    [dispatch, tripID]
+    [dispatch, tripID, crash]
   );
   if (!tripID) {
     return <div>No Trip Found</div>;
@@ -111,6 +111,18 @@ export function Trip({ tripData }) {
           >
             Start Trip
           </Button>
+          <div style={{ margin: "2px" }}>
+            <input
+              type="checkbox"
+              id="scales"
+              name="scales"
+              value={crash}
+              onChange={(e) => setCrash(e.target.checked)}
+            />
+            <label htmlFor="scales" style={{ margin: "3px" }}>
+              Crash
+            </label>
+          </div>
         </Col>
       );
     } else {

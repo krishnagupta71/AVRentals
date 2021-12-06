@@ -19,13 +19,6 @@ export function Bookings() {
   }, []);
 
   function AccordianToggle({ children, eventKey }) {
-    // const changeSelectedTrip = useCallback(
-    //   (index) => {
-    //     setSelectedTripId(index);
-    //   },
-    //   [dispatch, bookings]
-    // );
-
     const decoratedOnClick = useAccordionButton(eventKey, () =>
       setSelectedindex(eventKey)
     );
