@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion, Col, Card, useAccordionButton } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Trip } from "../trip/Trip";

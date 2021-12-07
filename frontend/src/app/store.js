@@ -3,6 +3,7 @@ import createSagaMiddleware from "redux-saga";
 import authReducer from "../features/auth/AuthSlice";
 import homeReducer from "../features/home/HomeSlice";
 import ridesReducer from "../features/bookings/BookingSlice";
+import adminReducer from "../features/admin/AdminSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   auth: authReducer,
   home: homeReducer,
   ride: ridesReducer,
+  admin: adminReducer,
 });
 const rootReducer = (state, action) => {
   if (action.type === logoutAction.type) {

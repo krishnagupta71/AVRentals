@@ -12,6 +12,16 @@ import {
   tripStartSaga,
   tripTrackingSaga,
 } from "../features/bookings/BookingSaga";
+import { 
+  deleteUserSaga,
+  loadAllUsersSaga,
+  updateUserSaga,
+  loadAllTripsSaga,
+  loadAllBillingsSaga,
+  loadAllCarsSaga,
+  updateCarSaga,
+  deleteCarSaga
+} from '../features/admin/AdminSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -26,5 +36,13 @@ export default function* rootSaga() {
     spawn(addUserCarSaga),
     spawn(deleteUserCarSaga),
     spawn(getAllUserBookingsSaga),
+    spawn(loadAllUsersSaga),
+    spawn(updateUserSaga),
+    spawn(deleteUserSaga),
+    spawn(loadAllTripsSaga),
+    spawn(loadAllBillingsSaga),
+    spawn(loadAllCarsSaga),
+    spawn(updateCarSaga),
+    spawn(deleteCarSaga),
   ]);
 }
