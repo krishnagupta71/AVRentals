@@ -15,11 +15,14 @@ import logoImage from "../../assets/logo.jpg";
 import tripCompleteImage from "../../assets/complete.png";
 import tripCollisionImage from "../../assets/crash.png";
 import { startRideAction } from "../../app/actions";
-// import { generatePdf } from "./Invoice";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PdfInvoice } from "./Invoice";
+import { getUserDetails } from "../auth/AuthSlice";
 
 export function Trip({ tripData }) {
   const dispatch = useDispatch();
   const locations = useSelector(getLocations);
+  const user = useSelector(getUserDetails);
   const [maxEta, setMaxEta] = useState(2);
   const [tripID, setTripID] = useState(tripData.tripID);
   const [crash, setCrash] = useState(false);
@@ -30,6 +33,11 @@ export function Trip({ tripData }) {
     }
     setTripID(tripData.tripID);
   }, [tripData, maxEta]);
+
+  const getInvoiceDocument = useCallback(() => {
+    console.log("from trip.js", tripData);
+    return <PdfInvoice tripData={{ ...tripData }} user={user} />;
+  }, [tripData]);
 
   const startTrip = useCallback(
     (e) => {
@@ -213,7 +221,10 @@ export function Trip({ tripData }) {
                     </div>
                   </div>
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Button variant="outline-info">Print Receipt</Button>
+                    <Button variant="outline-info">
+                      {""}
+                      <PdfInvoice tripData={tripData} user={user} />
+                    </Button>
                   </div>
                 </Container>
               </Row>

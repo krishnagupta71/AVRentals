@@ -8,7 +8,6 @@ import { HomeAdmin } from "./features/home/HomeAdmin";
 import { HomeOwner } from "./features/home/HomeOwner";
 import { Bookings } from "./features/bookings/Bookings";
 import { Profile } from "./features/profile/Profile";
-// import Invoice from "./features/trip/Invoice";
 function App() {
   return (
     <BrowserRouter>
@@ -28,9 +27,6 @@ function App() {
       <PrivateRoute exact path="/home/bookings">
         <Bookings />
       </PrivateRoute>
-      {/* <PrivateRoute exact path="/home/invoice">
-        <Invoice />
-      </PrivateRoute> */}
       <PrivateRoute exact path="/profile">
         <Profile />
       </PrivateRoute>
