@@ -32,7 +32,7 @@ const columns = [
   {
     name: 'Email',
     selector: row => row.user_email,
-    sortable:true
+    sortable: true
   },
   {
     name: 'Role',
@@ -51,14 +51,14 @@ const columns = [
 
 export function AdminUsers () {
   const users = useSelector(getAllUsers)
-  const [showAddUserModel, setShowAddUserModel] = useState(false)
+  const [showAddUserModal, setShowAddUserModal] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(loadAllUsersAction())
   }, [dispatch])
 
-  return users.length > 0 ? (
+  return users && users.length > 0 ? (
     <div className='admin-main-page'>
       <h1>Users</h1>
       <DataTable
@@ -69,19 +69,19 @@ export function AdminUsers () {
         actions={
           <button
             className='add-user-button'
-            onClick={() => setShowAddUserModel(true)}
+            onClick={() => setShowAddUserModal(true)}
           >
             Add User
           </button>
         }
         pagination
       />
-      <Modal show={showAddUserModel}>
+      <Modal show={showAddUserModal}>
         <RegisterFormCard
           submitButtonText='Add User'
-          setShowLogin={() => setShowAddUserModel(false)}
+          setShowLogin={() => setShowAddUserModal(false)}
           showLoginText='Cancel'
-          onSuccessCB={() => setShowAddUserModel(false)}
+          onSuccessCB={() => setShowAddUserModal(false)}
         />
       </Modal>
     </div>
@@ -128,7 +128,7 @@ const AdminUserDetails = ({ data }) => {
         })
       )
     }
-  }, [user_email, firstname, lastname, phone, address])
+  }, [user_email, firstname, lastname, phone, address, dispatch, data])
 
   const onDelete = useCallback(() => {
     const confirmed = window.confirm(
@@ -141,7 +141,7 @@ const AdminUserDetails = ({ data }) => {
         })
       )
     }
-  })
+  }, [userID, dispatch, firstname, lastname])
 
   return (
     <Form className='edit-user-form'>

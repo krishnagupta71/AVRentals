@@ -4,11 +4,13 @@ import {
   ButtonGroup,
   Form,
   FormControl,
-  InputGroup
+  InputGroup,
+  Modal
 } from 'react-bootstrap'
 import DataTable from 'react-data-table-component'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { AddCarForm } from '../home/AddCarForm'
 import {
   loadAllCarsAction,
   updateCarAction,
@@ -45,11 +47,12 @@ const columns = [
 
 export function AdminCars () {
   const cars = useSelector(getAllCars)
+  const [showAddCarModal, setShowAddCarModal] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(loadAllCarsAction())
-  }, [dispatch])
+  }, [dispatch, showAddCarModal])
 
   return cars && cars.length > 0 ? (
     <div className='admin-main-page'>
@@ -59,8 +62,22 @@ export function AdminCars () {
         data={cars}
         expandableRows={true}
         expandableRowsComponent={AdminCarDetails}
+        actions={
+          <button
+            className='add-user-button'
+            onClick={() => setShowAddCarModal(true)}
+          >
+            Add Car
+          </button>
+        }        
         pagination
       />
+      <Modal show={showAddCarModal}>
+        <AddCarForm 
+          onSuccessCB={() => setShowAddCarModal(false)}
+          onCancel={() => setShowAddCarModal(false)}
+        />
+      </Modal>
     </div>
   ) : (
     <h1>Cars</h1>
@@ -103,7 +120,7 @@ const AdminCarDetails = ({ data }) => {
         })
       )
     }
-  }, [manufacture, model, registration_number, userID])
+  }, [manufacture, model, registration_number, userID, data, dispatch])
 
   const onDelete = useCallback(() => {
     const confirmed = window.confirm(
@@ -116,7 +133,7 @@ const AdminCarDetails = ({ data }) => {
         })
       )
     }
-  })
+  }, [carID, dispatch])
 
   return (
     <Form className='edit-car-form'>

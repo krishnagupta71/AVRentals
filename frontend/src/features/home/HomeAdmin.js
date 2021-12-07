@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Col } from 'react-bootstrap'
-import { Redirect } from 'react-router'
-import { Container, Nav, Button, Form } from 'react-bootstrap'
+import { Container, Nav } from 'react-bootstrap'
 
 import { AdminBillings } from '../admin/AdminBillings'
 import { AdminCars } from '../admin/AdminCars'

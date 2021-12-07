@@ -28,7 +28,7 @@ export const RegisterFormCard = ({setShowLogin, submitButtonText, showLoginText,
       if (onSuccessCB) 
         onSuccessCB();
     },
-    [dispatch, email, password, name, phone, role, address]
+    [dispatch, email, password, name, phone, role, address, onSuccessCB]
   );
 
   return (

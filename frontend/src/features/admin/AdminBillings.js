@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 import { useDispatch, useSelector } from 'react-redux'
 import { countBy } from 'lodash'
