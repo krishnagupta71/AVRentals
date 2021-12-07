@@ -101,7 +101,7 @@ export const updateTrip = (req, res) => {
         console.log("miles is:", req.body.miles);
         billObj.miles = req.body.miles;
         billObj.cost = billObj.miles * 5;
-        billObj.tax = billObj.cost * 0.25;
+        billObj.tax = billObj.cost * 0.1;
         billObj.total_cost = billObj.cost + billObj.tax;
         billObj.userID = trip[0].userID;
         billObj.tripID = trip[0].tripID;
