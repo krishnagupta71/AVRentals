@@ -1,5 +1,11 @@
 import { all, spawn } from "redux-saga/effects";
-import { loginSaga, logoutSaga, registerSaga } from "../features/auth/AuthSaga";
+import {
+  fetchUserProfileSaga,
+  loginSaga,
+  logoutSaga,
+  registerSaga,
+  updateProfileSaga,
+} from "../features/auth/AuthSaga";
 import {
   addUserCarSaga,
   deleteUserCarSaga,
@@ -12,7 +18,7 @@ import {
   tripStartSaga,
   tripTrackingSaga,
 } from "../features/bookings/BookingSaga";
-import { 
+import {
   deleteUserSaga,
   loadAllUsersSaga,
   updateUserSaga,
@@ -20,8 +26,8 @@ import {
   loadAllBillingsSaga,
   loadAllCarsSaga,
   updateCarSaga,
-  deleteCarSaga
-} from '../features/admin/AdminSaga';
+  deleteCarSaga,
+} from "../features/admin/AdminSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -44,5 +50,7 @@ export default function* rootSaga() {
     spawn(loadAllCarsSaga),
     spawn(updateCarSaga),
     spawn(deleteCarSaga),
+    spawn(updateProfileSaga),
+    spawn(fetchUserProfileSaga),
   ]);
 }

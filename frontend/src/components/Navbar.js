@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Nav, Navbar, Button, Form } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutAction } from "../app/actions";
 import { isUserLoggedIn } from "../features/auth/AuthSlice";
 import { getUserDetails } from "../features/auth/AuthSlice";
+import { useLocation } from "react-router-dom";
 
 export function NavBar() {
   const isLoggedIn = useSelector(isUserLoggedIn);
   const userData = useSelector(getUserDetails);
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const logoutClicked = (e) => {
     e.preventDefault();
     dispatch(logoutAction());
@@ -32,11 +35,14 @@ export function NavBar() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            <Nav
+              className="me-auto"
+              defaultActiveKey="/home"
+              activeKey={location.pathname}
+            >
               <Nav.Link href="/home">
                 <p
                   style={{
-                    color: "white",
                     margin: 0,
                     fontStyle: "italic",
                   }}
@@ -44,11 +50,10 @@ export function NavBar() {
                   Home
                 </p>
               </Nav.Link>
-              { userData.role !== "admin" && 
+              {userData?.role === "user" && (
                 <Nav.Link href="/home/bookings">
                   <p
                     style={{
-                      color: "white",
                       margin: 0,
                       fontStyle: "italic",
                     }}
@@ -56,11 +61,10 @@ export function NavBar() {
                     Bookings
                   </p>
                 </Nav.Link>
-              }
-              <Nav.Link href="/home/bookings">
+              )}
+              <Nav.Link href="/profile">
                 <p
                   style={{
-                    color: "white",
                     margin: 0,
                     fontStyle: "italic",
                   }}

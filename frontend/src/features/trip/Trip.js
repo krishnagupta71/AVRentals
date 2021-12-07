@@ -15,6 +15,7 @@ import logoImage from "../../assets/logo.jpg";
 import tripCompleteImage from "../../assets/complete.png";
 import tripCollisionImage from "../../assets/crash.png";
 import { startRideAction } from "../../app/actions";
+// import { generatePdf } from "./Invoice";
 
 export function Trip({ tripData }) {
   const dispatch = useDispatch();

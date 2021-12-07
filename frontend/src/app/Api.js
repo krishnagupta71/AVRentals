@@ -1,6 +1,6 @@
 import axios from "axios";
-// const API_BASE_URL = "http://18.188.8.34:3000";
-const API_BASE_URL = "http://localhost:3001";
+const API_BASE_URL = "http://18.188.8.34:3000";
+// const API_BASE_URL = "http://localhost:3001";
 
 export async function post({ endpoint, body }) {
   try {
@@ -37,7 +37,6 @@ export async function put({ endpoint, body }) {
     };
   }
 }
-
 
 export async function get({ endpoint, params }) {
   try {
