@@ -1,88 +1,21 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Accordion, Card, Col, Container, Form, Button } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Accordion, Card, Col, Container, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserCarAction, fetchOwnerCarsAction } from "../../app/actions";
+import { fetchOwnerCarsAction } from "../../app/actions";
 import logoImage from "../../assets/logo.jpg";
 import { getUserCars } from "./HomeSlice";
+import { AddCarForm } from "./AddCarForm";
 
 export function HomeOwner() {
   const userCars = useSelector(getUserCars);
-  const [manufacturer, setManufacturer] = useState("");
-  const [model, setModel] = useState("");
-  const [regNo, setRegNo] = useState("");
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchOwnerCarsAction());
-  }, []);
+  }, [dispatch]);
 
-  const addUserCar = useCallback(
-    (e) => {
-      console.log("HERE");
-      if (
-        manufacturer.length === 0 ||
-        model.length === 0 ||
-        regNo.length === 0
-      ) {
-        alert("Enter Valid Details");
-        return false;
-      }
-      e.preventDefault();
-      dispatch(addUserCarAction({ manufacturer, model, regNo }));
-    },
-    [dispatch, manufacturer, regNo, model]
-  );
-  const addCarForm = () => {
-    return (
-      <Card.Body>
-        <Card.Title
-          className="lead"
-          style={{ marginBottom: "2vh", marginLeft: "8vw" }}
-        >
-          Add Car
-        </Card.Title>
-        <Form style={{ width: "100%" }}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Manufacturer</Form.Label>
-            <Form.Control
-              type="text"
-              value={manufacturer}
-              placeholder="Enter manufacturer"
-              onChange={(e) => setManufacturer(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Model</Form.Label>
-            <Form.Control
-              type="text"
-              value={model}
-              placeholder="Enter Model"
-              onChange={(e) => setModel(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Reg No</Form.Label>
-            <Form.Control
-              type="text"
-              value={regNo}
-              placeholder="Enter plate no"
-              onChange={(e) => setRegNo(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Button
-              variant="info"
-              // type="submit"
-              style={{ alignSelf: "center" }}
-              onClick={(e) => addUserCar(e)}
-            >
-              Add Car
-            </Button>
-          </Form.Group>
-        </Form>
-      </Card.Body>
-    );
-  };
+  
   return (
     <Container
       fluid
@@ -113,7 +46,7 @@ export function HomeOwner() {
               alignSelf: "center",
             }}
           />
-          {addCarForm()}
+          <AddCarForm />
         </Card>
       </Col>
 

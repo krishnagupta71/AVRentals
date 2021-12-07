@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Card,
   Col,
@@ -28,7 +28,7 @@ export function Trip({ tripData }) {
       setMaxEta(tripData?.eta);
     }
     setTripID(tripData.tripID);
-  }, [tripData]);
+  }, [tripData, maxEta]);
 
   const startTrip = useCallback(
     (e) => {
@@ -299,7 +299,7 @@ export function Trip({ tripData }) {
               <h5 style={{ color: "green" }}>
                 {
                   locations.filter(
-                    (item) => item.waypoint == tripData.pickup_location
+                    (item) => item.waypoint === tripData.pickup_location
                   )[0].name
                 }
               </h5>
@@ -342,7 +342,7 @@ export function Trip({ tripData }) {
               <h5 style={{ color: "blue" }}>
                 {
                   locations.filter(
-                    (item) => item.waypoint == tripData.dropoff_location
+                    (item) => item.waypoint === tripData.dropoff_location
                   )[0].name
                 }
               </h5>

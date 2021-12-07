@@ -98,7 +98,7 @@ export const updateCar = (req, res) => {
 
 export const deleteCar = (req, res) => {
   axios
-        .post(`${CARLA_BASE_URL}/vehicle/${req.params.id}`)
+        .delete(`${CARLA_BASE_URL}/vehicle/${req.params.id}`)
         .then((response) => {
           CarModel.deleteCar(req.params.id, (err, Car) => {
             if (err) res.send(err);

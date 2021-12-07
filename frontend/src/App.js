@@ -1,6 +1,6 @@
 import React from "react";
-import { AuthPage } from "./features/auth/AuthPage";
 import { BrowserRouter, Route } from "react-router-dom";
+import { AuthPage } from "./features/auth/AuthPage";
 import { NavBar } from "./components/Navbar";
 import { PrivateRoute } from "./util/PrivateRoute";
 import { Home } from "./features/home/Home";

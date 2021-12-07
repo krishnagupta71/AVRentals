@@ -1,6 +1,6 @@
 import axios from "axios";
-const API_BASE_URL = "http://18.188.8.34:3000";
-// const API_BASE_URL = "http://localhost:3000";
+// const API_BASE_URL = "http://18.188.8.34:3000";
+const API_BASE_URL = "http://localhost:3001";
 
 export async function post({ endpoint, body }) {
   try {
@@ -19,6 +19,25 @@ export async function post({ endpoint, body }) {
     };
   }
 }
+
+export async function put({ endpoint, body }) {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/${endpoint}`, body);
+    console.log({ endpoint, body, response });
+    if (!response.data.status) {
+      console.log(response.data.message);
+    }
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    alert(`endpoint: ${endpoint} + error: ${error.toString()}`);
+    return {
+      status: false,
+      meesage: error.toString(),
+    };
+  }
+}
+
 
 export async function get({ endpoint, params }) {
   try {

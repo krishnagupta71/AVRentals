@@ -3,9 +3,11 @@ import { Container, Nav, Navbar, Button, Form } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutAction } from "../app/actions";
 import { isUserLoggedIn } from "../features/auth/AuthSlice";
+import { getUserDetails } from "../features/auth/AuthSlice";
 
 export function NavBar() {
   const isLoggedIn = useSelector(isUserLoggedIn);
+  const userData = useSelector(getUserDetails);
   const dispatch = useDispatch();
   const logoutClicked = (e) => {
     e.preventDefault();
@@ -42,17 +44,19 @@ export function NavBar() {
                   Home
                 </p>
               </Nav.Link>
-              <Nav.Link href="/home/bookings">
-                <p
-                  style={{
-                    color: "white",
-                    margin: 0,
-                    fontStyle: "italic",
-                  }}
-                >
-                  Bookings
-                </p>
-              </Nav.Link>
+              { userData.role !== "admin" && 
+                <Nav.Link href="/home/bookings">
+                  <p
+                    style={{
+                      color: "white",
+                      margin: 0,
+                      fontStyle: "italic",
+                    }}
+                  >
+                    Bookings
+                  </p>
+                </Nav.Link>
+              }
               <Nav.Link href="/home/bookings">
                 <p
                   style={{
